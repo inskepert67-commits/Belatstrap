@@ -1,0 +1,745 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Belatstrap</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/hoNzUGn.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&family=Special+Gothic+Expanded+One&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./cursor.css" />
+  <link rel="stylesheet" href="./trail.css" />
+  <script src="./trail.js" defer></script>
+  <meta name="description" content="Belatstrap is a powerful full-width Roblox FFLAGS Manager designed for performance tuning, stability, and advanced control." />  <!-- Tailwind CSS CDN -->  <script src="https://cdn.tailwindcss.com"></script>  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#e10600',
+            ink: '#0b0b0b',
+            paper: '#ffffff',
+            fog: '#f4f4f4',
+            line: 'rgba(255, 255, 255, 0.14)',
+          }
+        }
+      }
+    }
+  </script>  <style>
+    body { background-color: #000 !important; color: #fff !important; font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; position: relative; min-height: 100vh; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(1200px 800px at 20% 15%, rgba(225, 6, 0, 0.12), rgba(0, 0, 0, 0) 60%),
+        radial-gradient(900px 700px at 80% 20%, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0) 55%),
+        url('https://i.imgur.com/naK1hruh.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      filter: grayscale(45%) contrast(108%) brightness(110%);
+      opacity: 0.78;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(900px 520px at 50% 10%, rgba(225, 6, 0, 0.10), rgba(0, 0, 0, 0) 55%),
+        radial-gradient(900px 520px at 50% 100%, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0) 55%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0.55)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0, rgba(255,255,255,0.07) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 36px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 36px);
+      mix-blend-mode: normal;
+      pointer-events: none;
+    }
+
+    section.bg-black { background-color: transparent !important; }
+    footer.bg-black { background-color: rgba(0, 0, 0, 0.62) !important; backdrop-filter: blur(10px); }
+    .border.bg-black { background-color: rgba(0, 0, 0, 0.55) !important; backdrop-filter: blur(10px); }
+    #music-player { backdrop-filter: blur(10px); }
+
+    html { scroll-behavior: smooth; }
+    .font-serif { font-family: "Gravitas One", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    .font-sans { font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .font-gothic { font-family: "Special Gothic Expanded One", "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .page-enter { animation: pageEnter 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes pageEnter {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .lux-link { position: relative; }
+    .lux-link::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: #e10600; transform: scaleX(0); transform-origin: left; transition: transform 240ms ease; }
+    .lux-link:hover::after { transform: scaleX(1); }
+    .glow-cta { position: relative; }
+    .glow-cta::before { content: ""; position: absolute; inset: -2px; background: radial-gradient(60% 60% at 50% 50%, rgba(225, 6, 0, 0.55) 0%, rgba(225, 6, 0, 0) 70%); filter: blur(10px); opacity: 0.85; z-index: -1; }
+    .glow-cta { animation: ctaPulse 2.6s ease-in-out infinite; }
+    @keyframes ctaPulse {
+      0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(225, 6, 0, 0); }
+      50% { transform: translateY(-1px); box-shadow: 0 0 34px rgba(225, 6, 0, 0.35); }
+    }
+
+    .motion {
+      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease, opacity 160ms ease, background-color 160ms ease, border-color 160ms ease;
+      will-change: transform;
+    }
+
+    .motion:active {
+      transform: scale(0.98);
+    }
+
+    .glow-primary {
+      box-shadow: 0 0 0 rgba(225, 6, 0, 0);
+    }
+
+    .glow-primary:hover {
+      box-shadow: 0 0 26px rgba(225, 6, 0, 0.28);
+      filter: drop-shadow(0 0 10px rgba(225, 6, 0, 0.22));
+    }
+
+    #site-nav.nav-scrolled {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      background-color: rgba(0, 0, 0, 0.82);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .motion, .glow-cta { transition: none !important; animation: none !important; }
+    }
+    .site-ready .stagger { animation: staggerIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes staggerIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #music-player {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 260px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: #d9d9d9;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      border-radius: 10px;
+      z-index: 9998;
+      overflow: hidden;
+    }
+
+    #music-player .mp-shell {
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+      color: #0b0b0b;
+      user-select: none;
+    }
+
+    #music-player .mp-drag {
+      height: 110px;
+      border-radius: 6px;
+      background: #eeeeee;
+      border: 1px solid rgba(11, 11, 11, 0.12);
+      background-image: url('https://i.imgur.com/as38uKx.jpeg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      cursor: grab;
+    }
+
+    #music-player.dragging .mp-drag {
+      cursor: grabbing;
+    }
+
+    #music-player .mp-drag::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+    }
+
+    #music-player .mp-progress {
+      display: grid;
+      grid-template-columns: 34px 1fr 34px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #music-player .mp-time {
+      font-size: 10px;
+      color: rgba(11, 11, 11, 0.65);
+      font-variant-numeric: tabular-nums;
+    }
+
+    #music-player input[type="range"] {
+      width: 100%;
+      accent-color: #0b0b0b;
+    }
+
+    #music-player .mp-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #music-player .mp-btn {
+      width: 40px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(11, 11, 11, 0.16);
+      background: rgba(255, 255, 255, 0.65);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    #music-player .mp-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(225, 6, 0, 0.75);
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    #music-player .mp-btn.mp-play {
+      width: 46px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+    #music-player .mp-volume {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 480px) {
+      #music-player { right: 12px; bottom: 12px; width: 220px; }
+    }
+  </style>  <!-- AOS Animation Library -->  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+<body class="text-white bg-black font-sans page-enter cursor-ready">
+  <div id="custom-cursor" aria-hidden="true"></div>
+  <div id="music-player" aria-label="Music Player">
+    <div class="mp-shell">
+      <div id="mp-drag" class="mp-drag" aria-label="Drag player">
+      </div>
+
+      <div class="mp-progress">
+        <div class="mp-time" id="mp-time-cur">0:00</div>
+        <input id="mp-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek" />
+        <div class="mp-time" id="mp-time-dur">0:00</div>
+      </div>
+
+      <div class="mp-controls">
+        <button id="mp-back" type="button" class="mp-btn" aria-label="Back Music">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17 6V18L7 12L17 6Z" fill="#0b0b0b"/>
+            <path d="M6 6V18" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button id="mp-play" type="button" class="mp-btn mp-play" aria-label="Play Button">Play</button>
+        <button id="mp-next" type="button" class="mp-btn" aria-label="Next Music">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 6V18L17 12L7 6Z" fill="#0b0b0b"/>
+            <path d="M18 6V18" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mp-volume">
+        <input id="mp-volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
+      </div>
+    </div>
+  </div>
+  <audio id="mp-audio" preload="none"></audio>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      AOS.init({
+        duration: 900,
+        easing: 'ease-out-cubic',
+        once: true,
+      });
+
+      document.body.classList.add('site-ready');
+
+      const cursor = document.getElementById('custom-cursor');
+      if (!cursor) return;
+
+      const move = (e) => {
+        cursor.style.setProperty('--cursor-x', e.clientX);
+        cursor.style.setProperty('--cursor-y', e.clientY);
+      };
+
+      window.addEventListener('mousemove', move, { passive: true });
+
+      const isInteractive = (el) => {
+        if (!el) return false;
+        return !!el.closest('a, button, summary, [role="button"], input, textarea, select, label');
+      };
+
+      window.addEventListener('mouseover', (e) => {
+        if (isInteractive(e.target)) cursor.classList.add('is-pointer');
+      }, { passive: true });
+
+      window.addEventListener('mouseout', (e) => {
+        if (isInteractive(e.target)) cursor.classList.remove('is-pointer');
+      }, { passive: true });
+
+      const audio = document.getElementById('mp-audio');
+      const nextBtn = document.getElementById('mp-next');
+      const backBtn = document.getElementById('mp-back');
+      const playBtn = document.getElementById('mp-play');
+      const seekSlider = document.getElementById('mp-seek');
+      const volSlider = document.getElementById('mp-volume');
+      const timeCur = document.getElementById('mp-time-cur');
+      const timeDur = document.getElementById('mp-time-dur');
+      const dragHandle = document.getElementById('mp-drag');
+
+      if (!audio || !nextBtn || !backBtn || !playBtn || !seekSlider || !volSlider || !timeCur || !timeDur || !dragHandle) return;
+
+      const playlist = [
+        "https://raw.githubusercontent.com/yekithegreat-cyber/mp3/main/pouf-salon.fr%20-%20Death%20Note%20-%20(Light%20s%20Theme%20B)%20Music%20(320%20KBps).mp3",
+      ];
+
+      let trackIndex = 0;
+
+      const formatTime = (secs) => {
+        const s = Math.max(0, Math.floor(secs || 0));
+        const m = Math.floor(s / 60);
+        const r = s % 60;
+        return `${m}:${String(r).padStart(2, '0')}`;
+      };
+
+      const loadTrack = (index) => {
+        trackIndex = ((index % playlist.length) + playlist.length) % playlist.length;
+        audio.crossOrigin = 'anonymous';
+        audio.src = playlist[trackIndex];
+        audio.load();
+        seekSlider.value = '0';
+        timeCur.textContent = '0:00';
+        timeDur.textContent = '0:00';
+      };
+
+      const applyVolume = () => {
+        const v = Number(volSlider.value);
+        audio.volume = Number.isFinite(v) ? v : 0.8;
+      };
+
+      const playSafe = async () => {
+        try {
+          await audio.play();
+          playBtn.textContent = 'Pause';
+        } catch (e) {
+          playBtn.textContent = 'Play';
+        }
+      };
+
+      audio.addEventListener('canplay', () => {
+        const d = Number.isFinite(audio.duration) ? audio.duration : 0;
+        seekSlider.max = String(d || 0);
+        timeDur.textContent = formatTime(d);
+      });
+
+      audio.addEventListener('playing', () => {
+        playBtn.textContent = 'Pause';
+      });
+
+      audio.addEventListener('pause', () => {
+        playBtn.textContent = 'Play';
+      });
+
+      audio.addEventListener('waiting', () => {
+      });
+
+      audio.addEventListener('error', () => {
+        playBtn.textContent = 'Play';
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        if (!Number.isFinite(audio.currentTime)) return;
+        if (document.activeElement !== seekSlider) {
+          seekSlider.value = String(audio.currentTime);
+        }
+        timeCur.textContent = formatTime(audio.currentTime);
+      });
+
+      applyVolume();
+      loadTrack(trackIndex);
+
+      volSlider.addEventListener('input', () => {
+        applyVolume();
+      });
+
+      seekSlider.addEventListener('input', () => {
+        timeCur.textContent = formatTime(Number(seekSlider.value));
+      });
+
+      seekSlider.addEventListener('change', () => {
+        const t = Number(seekSlider.value);
+        if (Number.isFinite(t)) audio.currentTime = t;
+      });
+
+      playBtn.addEventListener('click', async () => {
+        if (audio.paused) {
+          await playSafe();
+        } else {
+          audio.pause();
+        }
+      });
+
+      (() => {
+        const mp = document.getElementById('music-player');
+        if (!mp) return;
+
+        let dragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startLeft = 0;
+        let startTop = 0;
+
+        const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+        const setPos = (left, top) => {
+          const maxLeft = window.innerWidth - mp.offsetWidth;
+          const maxTop = window.innerHeight - mp.offsetHeight;
+          mp.style.left = `${clamp(left, 8, Math.max(8, maxLeft - 8))}px`;
+          mp.style.top = `${clamp(top, 8, Math.max(8, maxTop - 8))}px`;
+          mp.style.right = 'auto';
+          mp.style.bottom = 'auto';
+        };
+
+        const onDown = (e) => {
+          if (e.target && e.target.closest('button, input')) return;
+          dragging = true;
+          mp.classList.add('dragging');
+          const rect = mp.getBoundingClientRect();
+          startLeft = rect.left;
+          startTop = rect.top;
+          startX = e.clientX;
+          startY = e.clientY;
+          try { dragHandle.setPointerCapture(e.pointerId); } catch (_) {}
+        };
+
+        const onMove = (e) => {
+          if (!dragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          setPos(startLeft + dx, startTop + dy);
+        };
+
+        const onUp = () => {
+          if (!dragging) return;
+          dragging = false;
+          mp.classList.remove('dragging');
+        };
+
+        dragHandle.addEventListener('pointerdown', onDown);
+        window.addEventListener('pointermove', onMove, { passive: true });
+        window.addEventListener('pointerup', onUp, { passive: true });
+
+        window.addEventListener('resize', () => {
+          const rect = mp.getBoundingClientRect();
+          if (mp.style.left && mp.style.top) setPos(rect.left, rect.top);
+        });
+      })();
+
+      backBtn.addEventListener('click', async () => {
+        loadTrack(trackIndex - 1);
+        applyVolume();
+        await playSafe();
+      });
+
+      nextBtn.addEventListener('click', async () => {
+        loadTrack(trackIndex + 1);
+        applyVolume();
+        await playSafe();
+      });
+
+      audio.addEventListener('ended', async () => {
+        loadTrack(trackIndex + 1);
+        applyVolume();
+        await playSafe();
+      });
+    });
+  </script>  <!-- NAVBAR -->  <nav id="site-nav" class="w-full fixed top-0 z-50 bg-black/70 backdrop-blur border-b border-line">
+    <div class="max-w-[1400px] mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-3">
+          <img src="https://i.imgur.com/hoNzUGn.png" alt="Belatstrap logo" class="h-12 w-12 object-contain flex-shrink-0" loading="eager" />
+          <span class="text-xs tracking-[0.28em] uppercase">Belatstrap</span>
+        </a>
+        <a href="https://discord.com/invite/3az9TtVCkA" target="_blank" rel="noopener" class="inline-flex items-center justify-center ml-2 hover:opacity-80 transition" aria-label="Join Discord">
+          <img src="https://i.imgur.com/mmgMkV7.png" alt="Discord" class="h-5 w-5 object-contain" />
+        </a>
+      </div>
+      <details class="md:hidden relative">
+        <summary aria-label="Menu" class="list-none cursor-pointer select-none hover:opacity-60 transition">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 7H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 17H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </summary>
+        <div class="absolute right-0 mt-4 w-56 border border-line bg-black shadow-sm">
+          <div class="flex flex-col p-4 gap-4 text-xs tracking-[0.28em] uppercase">
+            <a href="#features" class="lux-link hover:opacity-60 transition">Features</a>
+            <a href="/about" class="lux-link hover:opacity-60 transition">About</a>
+            <a href="#download" class="lux-link hover:opacity-60 transition">Download</a>
+            <a href="#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+          </div>
+        </div>
+      </details>
+      <div class="hidden md:flex gap-10 text-xs tracking-[0.28em] uppercase">
+        <a href="#features" class="lux-link hover:opacity-60 transition">Features</a>
+        <a href="/about" class="lux-link hover:opacity-60 transition">About</a>
+        <a href="#download" class="lux-link hover:opacity-60 transition">Download</a>
+        <a href="#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+        <a href="#guide" class="lux-link hover:opacity-60 transition">Quick Start</a>
+      </div>
+    </div>
+  </nav>
+  <!-- HERO -->
+  <section class="min-h-screen w-full flex items-center justify-center text-center px-6 bg-black">
+    <div class="max-w-4xl pt-28 pb-20" data-aos="fade-up">
+      <h2 class="font-serif text-5xl md:text-7xl font-semibold mb-6 stagger" style="animation-delay: 60ms;">
+        Roblox <span class="text-brandRed font-sans tracking-[0.02em]">FFLAGS</span><br />Manager
+      </h2>
+      <p class="text-white/70 text-lg md:text-xl mb-10 stagger" style="animation-delay: 140ms;">
+        Belatstrap gives you full control over Roblox Fast Flags — optimize performance, unlock hidden options, and manage configurations safely.
+      </p>
+      <div class="flex flex-col md:flex-row gap-4 justify-center stagger" style="animation-delay: 220ms;">
+        <a href="#download" class="glow-cta glow-primary motion inline-flex items-center justify-center px-8 py-4 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition">Get Belatstrap</a>
+        <a href="#features" class="motion inline-flex items-center justify-center px-8 py-4 border border-line text-xs tracking-[0.28em] uppercase hover:bg-white/5 transition">Explore Features</a>
+        <button id="note-open" type="button" class="motion inline-flex items-center justify-center px-8 py-4 border border-line text-xs tracking-[0.28em] uppercase hover:bg-white/5 transition">NOTE</button>
+      </div>
+    </div>
+  </section>
+  <!-- QUICK START -->
+  <section id="guide" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto">
+      <h3 class="font-serif text-4xl font-semibold mb-12 text-center">Quick Start: Using the .exe</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="border border-line bg-black p-6">
+          <div class="text-xs tracking-[0.28em] uppercase text-brandRed mb-3">Step 1</div>
+          <h4 class="font-semibold text-lg mb-2">Download The Application</h4>
+          <p class="text-white/70 leading-relaxed">Download the Belatstrap application.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <div class="text-xs tracking-[0.28em] uppercase text-brandRed mb-3">Step 2</div>
+          <h4 class="font-semibold text-lg mb-2">Run as Administrator</h4>
+          <p class="text-white/70 leading-relaxed">Right click the .exe and select “Run as administrator” so it can apply flags correctly.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <div class="text-xs tracking-[0.28em] uppercase text-brandRed mb-3">Step 3</div>
+          <h4 class="font-semibold text-lg mb-2">Choose a Preset</h4>
+          <p class="text-white/70 leading-relaxed">Pick Performance, Graphics, or Stability. You can also customize flags manually inside the app.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <div class="text-xs tracking-[0.28em] uppercase text-brandRed mb-3">Step 4</div>
+          <h4 class="font-semibold text-lg mb-2">Apply & Launch Roblox</h4>
+          <p class="text-white/70 leading-relaxed">Click Apply, then open Roblox to enjoy the changes. Use Restore to revert anytime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FEATURES -->
+  <section id="features" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-[1400px] mx-auto">
+      <h3 class="font-serif text-4xl font-semibold mb-14 text-center">Core Features</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">FFLAGS Presets</h4>
+          <p class="text-white/70 leading-relaxed">Apply performance, FPS boost, graphics, and stability presets with one click.</p>
+        </div>
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">Advanced Tweaks</h4>
+          <p class="text-white/70 leading-relaxed">Edit hidden Roblox flags not accessible from the normal client.</p>
+        </div>
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">User Friendly UI</h4>
+          <p class="text-white/70 leading-relaxed">Modern black & red interface designed for clarity and speed.</p>
+        </div>
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">Regular Updates</h4>
+          <p class="text-white/70 leading-relaxed">Always compatible with the latest Roblox updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ABOUT -->
+  <section id="about" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto text-center">
+      <h3 class="font-serif text-4xl font-semibold mb-8">What is Belatstrap?</h3>
+      <p class="text-white/70 text-lg leading-relaxed">
+        Belatstrap is a dedicated Roblox FFLAGS Manager built for players who want maximum control over performance and behavior.
+        It simplifies complex configuration files into an easy-to-use application while keeping everything secure and reversible.
+      </p>
+    </div>
+  </section>
+  <!-- DOWNLOAD -->
+  <section id="download" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto text-center">
+      <h3 class="font-serif text-4xl font-semibold mb-6">Download Belatstrap</h3>
+      <p class="text-white/60 mb-10">Compatible with modern Roblox clients. Windows supported.</p>
+      <a href="https://raw.githubusercontent.com/inskepert67-commits/Belastrap.exe/main/Belatstrap.exe" download="Belatstrap.exe" class="glow-cta glow-primary motion inline-flex items-center justify-center px-10 py-5 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition">
+        Download Now
+      </a>
+    </div>
+  </section>
+  <!-- FAQ -->
+  <section id="faq" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto">
+      <h3 class="font-serif text-4xl font-semibold mb-12 text-center">Frequently Asked Questions</h3>
+      <div class="space-y-6">
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Is Belatstrap safe?</h4>
+          <p class="text-white/70 mt-2">Yes. It uses memory injection to modify FFLAGS in Roblox's process—only configuration flags, not game code or files.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Can I get banned using Belatstrap?</h4>
+          <p class="text-white/70 mt-2">Belatstrap are injected into memory using the safest injection methods available. This approach minimizes detection risks while allowing the modifications to function properly. We prioritize security and safety in our implementation to protect users from potential bans or issues.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Is it free?</h4>
+          <p class="text-white/70 mt-2">Yes, Belatstrap is free to use.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="w-full bg-black border-t border-line px-6 py-10">
+    <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-white/60"> 2024 Belatstrap. All rights reserved.</p>
+      <p class="text-white/50 text-sm">Not affiliated with Roblox Corporation.</p>
+    </div>
+  </footer>
+
+  <div id="note-modal" role="dialog" aria-modal="true" aria-labelledby="note-title" class="note-modal" hidden>
+    <div class="note-backdrop" data-note-close></div>
+    <div class="note-panel" role="document">
+      <div class="note-head">
+        <h3 id="note-title" class="font-serif">Important Notice</h3>
+        <button id="note-close" type="button" class="note-x" aria-label="Close" data-note-close">×</button>
+      </div>
+      <div class="note-body">
+        <div class="note-kicker">⚠️ Important Notice About Antivirus Detections</div>
+        <p>If your antivirus software is flagging this Tool fflag manager as a virus or malicious software, <strong>this is a false positive.</strong> The application is completely safe and contains no malware.</p>
+
+        <h4 class="note-h"><span class="note-ico">❓</span> Why is this happening?</h4>
+        <p>This tool works by modifying feature flags (fflags) in other processes — that's literally its entire purpose. To do this, it needs to write to the memory of running applications. Antivirus programs see this behavior and automatically flag it as "suspicious" because malware also writes to other processes.</p>
+
+        <p class="note-sub">The reality:</p>
+        <ul class="note-checklist">
+          <li><span class="note-check">✅</span><span>This is legitimate functionality, not a virus</span></li>
+          <li><span class="note-check">✅</span><span>The tool does exactly what it’s supposed to do — nothing more</span></li>
+          <li><span class="note-check">✅</span><span>Thousands of legitimate programs (game mods, trainers, development tools) get flagged the same way</span></li>
+        </ul>
+
+        <p><strong>This is NOT a virus.</strong> It's flagged because of how it works, not because it's doing anything harmful.</p>
+
+        <div class="note-divider" role="separator" aria-hidden="true"></div>
+
+        <h4 class="note-h"><span class="note-ico">✅</span> What should you do?</h4>
+        <ol class="note-steps">
+          <li>Add the application to your antivirus exclusion/whitelist</li>
+          <li>Only download from the official source to ensure you have the real version</li>
+          <li>If you're still concerned, here is the file hashed source:</li>
+        </ol>
+
+        <p><a href="https://hashed-belatstrap.vercel.app/" target="_blank" rel="noopener" class="note-link">REPORT HASHED <span class="note-ext" aria-hidden="true">↗</span></a></p>
+
+        <div class="note-divider" role="separator" aria-hidden="true"></div>
+
+        <h4 class="note-h">HANDLE CRASHED ROBLOX <span class="note-badge">[BETA]</span></h4>
+        <ul class="note-checklist">
+          <li><span class="note-check">•</span><span><strong>HWID (SPOOFER) [AUTO]</strong></span></li>
+          <li><span class="note-check">•</span><span><strong>MAC ADDRESS (SPOOFER) [MANUAL]</strong></span></li>
+          <li><span class="note-check">•</span><span><strong>False Positive [VIRUSES]</strong></span></li>
+          <li><span class="note-check">•</span><span><strong>Memory Safe Injection [STEALTH]</strong></span></li>
+        </ul>
+      </div>
+      <div class="note-foot">
+        <button type="button" class="motion px-6 py-3 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition" data-note-close>Close</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    .note-modal { position: fixed; inset: 0; z-index: 99999; }
+    .note-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.72); }
+    .note-panel { position: relative; width: min(920px, calc(100vw - 32px)); margin: 84px auto; background: rgba(18,18,18,0.88); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,0.6); display: flex; flex-direction: column; max-height: calc(100vh - 140px); }
+    #note-modal, #note-modal * { cursor: none !important; }
+    body.cursor-ready #custom-cursor { z-index: 100000 !important; }
+    .note-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); flex: 0 0 auto; }
+    .note-head h3 { margin: 0; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .note-x { width: 40px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; font-size: 22px; line-height: 1; }
+    .note-x:hover { background: rgba(255,255,255,0.10); }
+    .note-body { padding: 22px 22px 2px; text-align: left; color: rgba(255,255,255,0.88); overflow: auto; -webkit-overflow-scrolling: touch; flex: 1 1 auto; }
+    .note-kicker { color: #fff; font-weight: 700; margin-bottom: 14px; }
+    .note-h { margin: 18px 0 10px; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .note-ico { width: 20px; display: inline-flex; align-items: center; justify-content: center; }
+    .note-body p { margin: 10px 0; line-height: 1.7; }
+    .note-sub { margin-top: 12px; margin-bottom: 10px; color: rgba(255,255,255,0.78); }
+    .note-checklist { list-style: none; padding: 0; margin: 0 0 14px 0; }
+    .note-checklist li { display: flex; gap: 10px; align-items: flex-start; margin: 10px 0; }
+    .note-check { width: 18px; flex: 0 0 18px; line-height: 1.2; }
+    .note-divider { height: 1px; background: rgba(255,255,255,0.10); margin: 20px 0; }
+    .note-badge { color: #111827; font-weight: 800; background: rgba(250, 204, 21, 0.95); border: 1px solid rgba(250, 204, 21, 0.65); padding: 2px 8px; border-radius: 999px; letter-spacing: 0.08em; }
+    .note-steps { margin: 10px 0 14px 22px; }
+    .note-link { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+    .note-link:hover { color: #e10600; }
+    .note-ext { opacity: 0.75; }
+    .note-foot { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: flex-end; flex: 0 0 auto; }
+    @media (max-width: 480px) { .note-panel { margin: 64px auto; max-height: calc(100vh - 120px); } }
+  </style>
+
+  <script>
+    (function () {
+      const openBtn = document.getElementById('note-open');
+      const modal = document.getElementById('note-modal');
+      if (!openBtn || !modal) return;
+
+      const closeBtn = document.getElementById('note-close');
+      const closeEls = modal.querySelectorAll('[data-note-close]');
+      let lastFocus = null;
+
+      const focusFirst = () => {
+        const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        for (const el of focusable) {
+          if (!el.hasAttribute('disabled') && el.offsetParent !== null) {
+            el.focus();
+            return;
+          }
+        }
+      };
+
+      const open = () => {
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        focusFirst();
+      };
+
+      const close = () => {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      };
+
+      openBtn.addEventListener('click', open);
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      closeEls.forEach((el) => el.addEventListener('click', close));
+
+      document.addEventListener('keydown', (e) => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
+
+</body>
+</html>
