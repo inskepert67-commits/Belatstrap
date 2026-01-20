@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Note - Belatstrap</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/hoNzUGn.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&family=Special+Gothic+Expanded+One&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./cursor.css" />
+  <link rel="stylesheet" href="./trail.css" />
+  <script src="./trail.min.js" defer></script>
+  <meta name="description" content="Important antivirus false-positive note and hashed report link." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#e10600',
+            line: 'rgba(255, 255, 255, 0.14)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #000 !important; color: #fff !important; font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; position: relative; min-height: 100vh; }
+    section.bg-black { background-color: transparent !important; }
+    footer.bg-black { background-color: rgba(0, 0, 0, 0.62) !important; backdrop-filter: blur(10px); }
+    .border.bg-black { background-color: rgba(0, 0, 0, 0.55) !important; backdrop-filter: blur(10px); }
+    #music-player { backdrop-filter: blur(10px); }
+    html { scroll-behavior: smooth; }
+
+    .font-serif { font-family: "Gravitas One", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    .font-sans { font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .lux-link { position: relative; }
+    .lux-link::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: #e10600; transform: scaleX(0); transform-origin: left; transition: transform 240ms ease; }
+    .lux-link:hover::after { transform: scaleX(1); }
+
+    .note-card { position: relative; width: min(920px, calc(100vw - 32px)); margin: 0 auto; background: rgba(18,18,18,0.88); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,0.6); }
+    .note-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .note-head h3 { margin: 0; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .note-body { padding: 22px 22px 14px; text-align: left; color: rgba(255,255,255,0.88); }
+    .note-kicker { color: #fff; font-weight: 700; margin-bottom: 14px; }
+    .note-h { margin: 18px 0 10px; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .note-ico { width: 20px; display: inline-flex; align-items: center; justify-content: center; }
+    .note-body p { margin: 10px 0; line-height: 1.7; }
+    .note-sub { margin-top: 12px; margin-bottom: 10px; color: rgba(255,255,255,0.78); }
+    .note-checklist { list-style: none; padding: 0; margin: 0 0 14px 0; }
+    .note-checklist li { display: flex; gap: 10px; align-items: flex-start; margin: 10px 0; }
+    .note-check { width: 18px; flex: 0 0 18px; line-height: 1.2; }
+    .note-divider { height: 1px; background: rgba(255,255,255,0.10); margin: 20px 0; }
+    .note-steps { margin: 10px 0 14px 22px; }
+    .note-link { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+    .note-link:hover { color: #e10600; }
+    .note-ext { opacity: 0.75; }
+    .note-badge { color: #111827; font-weight: 800; background: rgba(250, 204, 21, 0.95); border: 1px solid rgba(250, 204, 21, 0.65); padding: 2px 8px; border-radius: 999px; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body class="text-white bg-black font-sans cursor-ready">
+  <div id="custom-cursor" aria-hidden="true"></div>
+
+  <nav id="site-nav" class="w-full fixed top-0 z-50 bg-black/70 backdrop-blur border-b border-line">
+    <div class="max-w-[1400px] mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3">
+          <img src="https://i.imgur.com/hoNzUGn.png" alt="Belatstrap logo" class="h-12 w-12 object-contain flex-shrink-0" loading="eager" />
+          <span class="text-xs tracking-[0.28em] uppercase">Belatstrap</span>
+        </a>
+      </div>
+      <div class="hidden md:flex gap-10 text-xs tracking-[0.28em] uppercase">
+        <a href="/" class="lux-link hover:opacity-60 transition">Home</a>
+        <a href="/about" class="lux-link hover:opacity-60 transition">About</a>
+        <a href="/note" class="lux-link hover:opacity-60 transition">Note</a>
+        <a href="/#download" class="lux-link hover:opacity-60 transition">Download</a>
+        <a href="/#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="min-h-screen w-full flex items-center justify-center px-6 bg-black">
+    <div class="w-full max-w-5xl pt-28 pb-20">
+      <div class="note-card" role="article" aria-label="Important Note">
+        <div class="note-head">
+          <h3>NOTE</h3>
+          <a href="/" class="lux-link text-xs tracking-[0.28em] uppercase hover:opacity-70 transition">Back</a>
+        </div>
+        <div class="note-body">
+          <div class="note-kicker"><span aria-hidden="true">⚠️</span> IMPORTANT NOTE</div>
+
+          <h4 class="note-h"><span class="note-ico" aria-hidden="true">❓</span> Why is this happening?</h4>
+          <p>Some antivirus programs may flag this as a threat because it modifies or injects into a process.</p>
+
+          <div class="note-sub">Common reasons include:</div>
+          <ul class="note-checklist">
+            <li><span class="note-check" aria-hidden="true">✅</span><span>It interacts with a game process</span></li>
+            <li><span class="note-check" aria-hidden="true">✅</span><span>It uses advanced system calls</span></li>
+            <li><span class="note-check" aria-hidden="true">✅</span><span>It is packed/obfuscated to prevent tampering</span></li>
+          </ul>
+
+          <p><strong>This is NOT a virus.</strong> It's flagged because of how it works, not because it's doing anything harmful.</p>
+
+          <div class="note-divider" role="separator" aria-hidden="true"></div>
+
+          <h4 class="note-h"><span class="note-ico" aria-hidden="true">✅</span> What should you do?</h4>
+          <ol class="note-steps">
+            <li>Add the application to your antivirus exclusion/whitelist</li>
+            <li>Only download from the official source to ensure you have the real version</li>
+            <li>If you're still concerned, here is the file hashed source:</li>
+          </ol>
+
+          <p><a href="https://hashed-belatstrap.vercel.app/" target="_blank" rel="noopener" class="note-link">REPORT HASHED <span class="note-ext" aria-hidden="true">↗</span></a></p>
+
+          <div class="note-divider" role="separator" aria-hidden="true"></div>
+
+          <h4 class="note-h">HANDLE CRASHED ROBLOX <span class="note-badge">[BETA]</span></h4>
+          <ul class="note-checklist">
+            <li><span class="note-check" aria-hidden="true">•</span><span><strong>HWID (SPOOFER) [AUTO]</strong></span></li>
+            <li><span class="note-check" aria-hidden="true">•</span><span><strong>MAC ADDRESS (SPOOFER) [MANUAL]</strong></span></li>
+            <li><span class="note-check" aria-hidden="true">•</span><span><strong>False Positive [VIRUSES]</strong></span></li>
+            <li><span class="note-check" aria-hidden="true">•</span><span><strong>Memory Safe Injection [STEALTH]</strong></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8 flex justify-center">
+        <a href="/" class="inline-flex items-center justify-center px-8 py-4 border border-line text-xs tracking-[0.28em] uppercase hover:bg-white/5 transition">Back to Home</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="w-full bg-black border-t border-line px-6 py-10">
+    <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-white/60">© 2024 Belatstrap. All rights reserved.</p>
+      <p class="text-white/50 text-sm">Not affiliated with Roblox Corporation.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const cursor = document.getElementById('custom-cursor');
+      if (!cursor) return;
+
+      const move = (e) => {
+        cursor.style.setProperty('--cursor-x', e.clientX);
+        cursor.style.setProperty('--cursor-y', e.clientY);
+      };
+
+      window.addEventListener('mousemove', move, { passive: true });
+
+      const isInteractive = (el) => {
+        if (!el) return false;
+        return !!el.closest('a, button, summary, [role="button"], input, textarea, select, label');
+      };
+
+      window.addEventListener('mouseover', (e) => {
+        if (isInteractive(e.target)) cursor.classList.add('is-pointer');
+      }, { passive: true });
+
+      window.addEventListener('mouseout', (e) => {
+        if (isInteractive(e.target)) cursor.classList.remove('is-pointer');
+      }, { passive: true });
+
+      document.body.classList.add('cursor-ready');
+    });
+  </script>
+</body>
+</html>
