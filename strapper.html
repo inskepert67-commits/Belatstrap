@@ -221,7 +221,7 @@
     }
   </style>  <!-- AOS Animation Library -->  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
-<body class="text-white bg-black font-sans page-enter cursor-ready">
+<body class="text-white bg-black font-sans page-enter">
   <div id="custom-cursor" aria-hidden="true"></div>
   <div id="music-player" aria-label="Music Player">
     <div class="mp-shell">
@@ -270,12 +270,15 @@
       const cursor = document.getElementById('custom-cursor');
       if (!cursor) return;
 
+      document.body.classList.add('cursor-ready');
+
       const move = (e) => {
         cursor.style.setProperty('--cursor-x', e.clientX);
         cursor.style.setProperty('--cursor-y', e.clientY);
       };
 
       window.addEventListener('mousemove', move, { passive: true });
+      window.addEventListener('pointermove', move, { passive: true });
 
       const isInteractive = (el) => {
         if (!el) return false;
