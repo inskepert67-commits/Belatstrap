@@ -1,8 +1,8 @@
-html, body {
+body.cursor-ready {
   cursor: none !important;
 }
 
-* {
+body.cursor-ready * {
   cursor: none !important;
 }
 
