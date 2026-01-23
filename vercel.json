@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/strapper.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/note", "destination": "/note.html" }
+  ]
+}
