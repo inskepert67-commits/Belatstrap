@@ -1176,7 +1176,6 @@
     @keyframes donateRipple { to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
 
     .donate-modal { position: fixed; inset: 0; z-index: 99998; }
-    #donate-modal, #donate-modal * { cursor: none !important; }
     .donate-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.78); opacity: 0; transition: opacity 220ms ease; }
     .donate-panel { position: relative; width: min(760px, calc(100vw - 32px)); margin: 96px auto; background: rgba(18,18,18,0.90); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,0.6); display: flex; flex-direction: column; max-height: calc(100vh - 180px); transform: translateY(14px) scale(0.98); opacity: 0; transition: transform 260ms cubic-bezier(.2,.8,.2,1), opacity 260ms ease; }
     .donate-modal.is-open .donate-backdrop { opacity: 1; }
