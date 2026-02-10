@@ -1,0 +1,19 @@
+html, body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: transparent;
+}
+
+img, a {
+  -webkit-user-drag: none;
+}

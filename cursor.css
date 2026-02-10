@@ -1,0 +1,46 @@
+body.cursor-ready {
+  cursor: none !important;
+}
+
+body.cursor-ready * {
+  cursor: none !important;
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url('https://i.imgur.com/ornrf2H.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  --cursor-x: 0;
+  --cursor-y: 0;
+  --cursor-scale: 1;
+  transform: translate3d(calc(var(--cursor-x) * 1px), calc(var(--cursor-y) * 1px), 0) translate3d(-50%, -50%, 0) scale(var(--cursor-scale));
+  transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
+  opacity: 0;
+}
+
+body.cursor-ready #custom-cursor {
+  opacity: 1;
+}
+
+#custom-cursor.is-pointer {
+  --cursor-scale: 1.15;
+  filter: drop-shadow(0 0 10px rgba(225, 6, 0, 0.45));
+}
+
+@media (hover: none) {
+  html, body, * {
+    cursor: auto !important;
+  }
+
+  #custom-cursor {
+    display: none;
+  }
+}
