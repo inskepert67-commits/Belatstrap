@@ -1,0 +1,1114 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Belatstrap</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/hoNzUGn.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&family=Special+Gothic+Expanded+One&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cursor.css" />
+  <link rel="stylesheet" href="trail.css" />
+  <script src="trail.min.js" defer></script>
+  <meta name="description" content="Belatstrap - Roblox FFLAGS manager for FPS unlocking, performance tweaks, and graphics optimization." />  <!-- Tailwind CSS CDN -->  <script src="https://cdn.tailwindcss.com"></script>  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#e10600',
+            ink: '#0b0b0b',
+            paper: '#ffffff',
+            fog: '#f4f4f4',
+            line: 'rgba(255, 255, 255, 0.14)',
+          }
+        }
+      }
+    }
+  </script>  <style>
+    body { background-color: #000 !important; color: #fff !important; font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; position: relative; min-height: 100vh; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: url('https://i.imgur.com/naK1hruh.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      filter: grayscale(20%) brightness(90%);
+      opacity: 0.3;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.55);
+      pointer-events: none;
+    }
+
+    section.bg-black { background-color: transparent !important; }
+    footer.bg-black { background-color: rgba(0, 0, 0, 0.78) !important; }
+    .border.bg-black { background-color: rgba(0, 0, 0, 0.72) !important; }
+
+    html { scroll-behavior: smooth; }
+    .font-serif { font-family: "Gravitas One", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    .font-sans { font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .font-gothic { font-family: "Special Gothic Expanded One", "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .page-enter { animation: pageEnter 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes pageEnter {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .lux-link { position: relative; }
+    .lux-link::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: #e10600; transform: scaleX(0); transform-origin: left; transition: transform 240ms ease; }
+    .lux-link:hover::after { transform: scaleX(1); }
+    .glow-cta { position: relative; }
+    .glow-cta::before { content: ""; position: absolute; inset: -2px; background: radial-gradient(60% 60% at 50% 50%, rgba(225, 6, 0, 0.55) 0%, rgba(225, 6, 0, 0) 70%); filter: blur(10px); opacity: 0.85; z-index: -1; }
+    .glow-cta { animation: ctaPulse 2.6s ease-in-out infinite; }
+    @keyframes ctaPulse {
+      0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(225, 6, 0, 0); }
+      50% { transform: translateY(-1px); box-shadow: 0 0 34px rgba(225, 6, 0, 0.35); }
+    }
+
+    .motion {
+      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease, opacity 160ms ease, background-color 160ms ease, border-color 160ms ease;
+      will-change: transform;
+    }
+
+    .motion:active {
+      transform: scale(0.98);
+    }
+
+    .glow-primary {
+      box-shadow: 0 0 0 rgba(225, 6, 0, 0);
+    }
+
+    .glow-primary:hover {
+      box-shadow: 0 0 26px rgba(225, 6, 0, 0.28);
+      filter: drop-shadow(0 0 10px rgba(225, 6, 0, 0.22));
+    }
+    .glow-text {
+      text-shadow: 0 0 5px rgba(150, 0, 0, 0.8), 0 0 10px rgba(150, 0, 0, 0.6);
+      transition: text-shadow 0.3s ease;
+    }
+    .glow-text:hover {
+      text-shadow: 0 0 8px rgba(200, 0, 0, 1), 0 0 15px rgba(200, 0, 0, 0.8), 0 0 20px rgba(200, 0, 0, 0.6);
+    }
+
+    #site-nav.nav-scrolled {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      background-color: rgba(0, 0, 0, 0.82);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .motion, .glow-cta { transition: none !important; animation: none !important; }
+    }
+    .site-ready .stagger { animation: staggerIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes staggerIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #music-player {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 260px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: #d9d9d9;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      border-radius: 10px;
+      z-index: 9998;
+      overflow: hidden;
+    }
+
+    #music-player .mp-shell {
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+      color: #0b0b0b;
+      user-select: none;
+    }
+
+    #music-player .mp-drag {
+      height: 110px;
+      border-radius: 6px;
+      background: #eeeeee;
+      border: 1px solid rgba(11, 11, 11, 0.12);
+      background-image: url('https://i.imgur.com/as38uKx.jpeg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      cursor: grab;
+    }
+
+    #music-player.dragging .mp-drag {
+      cursor: grabbing;
+    }
+
+    #music-player .mp-drag::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+    }
+
+    #music-player .mp-progress {
+      display: grid;
+      grid-template-columns: 34px 1fr 34px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #music-player .mp-time {
+      font-size: 10px;
+      color: rgba(11, 11, 11, 0.65);
+      font-variant-numeric: tabular-nums;
+    }
+
+    #music-player input[type="range"] {
+      width: 100%;
+      accent-color: #0b0b0b;
+    }
+
+    #music-player .mp-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #music-player .mp-btn {
+      width: 40px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(11, 11, 11, 0.16);
+      background: rgba(255, 255, 255, 0.65);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    #music-player .mp-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(225, 6, 0, 0.75);
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    #music-player .mp-btn.mp-play {
+      width: 46px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+    #music-player .mp-volume {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 480px) {
+      #music-player { right: 12px; bottom: 12px; width: 220px; }
+    }
+
+    /* Spider Web Canvas Overlay */
+    #spiderWebCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="text-white bg-black font-sans page-enter">
+  <canvas id="spiderWebCanvas"></canvas>
+  <div id="custom-cursor" aria-hidden="true"></div>
+  <div id="music-player" aria-label="Music Player">
+    <div class="mp-shell">
+      <div id="mp-drag" class="mp-drag" aria-label="Drag player">
+      </div>
+
+      <div class="mp-progress">
+        <div class="mp-time" id="mp-time-cur">0:00</div>
+        <input id="mp-seek" type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek" />
+        <div class="mp-time" id="mp-time-dur">0:00</div>
+      </div>
+
+      <div class="mp-controls">
+        <button id="mp-back" type="button" class="mp-btn" aria-label="Back Music">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17 6V18L7 12L17 6Z" fill="#0b0b0b"/>
+            <path d="M6 6V18" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button id="mp-play" type="button" class="mp-btn mp-play" aria-label="Play Button">Play</button>
+        <button id="mp-next" type="button" class="mp-btn" aria-label="Next Music">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 6V18L17 12L7 6Z" fill="#0b0b0b"/>
+            <path d="M18 6V18" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mp-volume">
+        <input id="mp-volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
+      </div>
+    </div>
+  </div>
+  <audio id="mp-audio" preload="none"></audio>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // New Spider Cursor Follower - Inlined
+    (function() {
+      console.log('Spider cursor script loaded');
+      const canvas = document.getElementById('spiderWebCanvas');
+      if (!canvas) {
+        console.error('Canvas element not found!');
+        return;
+      }
+      console.log('Canvas found:', canvas);
+      const ctx = canvas.getContext('2d');
+      
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      console.log('Canvas initialized:', w, 'x', h);
+      
+      const { sin, cos, PI, hypot, min, max } = Math;
+
+      function spawn() {
+        const pts = many(333, () => {
+          return {
+            x: rnd(innerWidth),
+            y: rnd(innerHeight),
+            len: 0,
+            r: 0
+          };
+        });
+        const pts2 = many(9, (i) => {
+          return {
+            x: cos((i / 9) * PI * 2),
+            y: sin((i / 9) * PI * 2)
+          };
+        });
+        let seed = rnd(100);
+        let tx = rnd(innerWidth);
+        let ty = rnd(innerHeight);
+        let x = rnd(innerWidth);
+        let y = rnd(innerHeight);
+        let kx = rnd(0.5, 0.5);
+        let ky = rnd(0.5, 0.5);
+        let walkRadius = pt(rnd(50, 50), rnd(50, 50));
+        let r = innerWidth / rnd(100, 150);
+
+        function paintPt(pt) {
+          pts2.forEach((pt2) => {
+            if (!pt.len) return;
+            drawLine(
+              lerp(x + pt2.x * r, pt.x, pt.len * pt.len),
+              lerp(y + pt2.y * r, pt.y, pt.len * pt.len),
+              x + pt2.x * r,
+              y + pt2.y * r
+            );
+          });
+        }
+        
+        return {
+          follow(x, y) {
+            tx = x;
+            ty = y;
+          },
+          tick(t) {
+            const selfMoveX = cos(t * kx + seed) * walkRadius.x;
+            const selfMoveY = sin(t * ky + seed) * walkRadius.y;
+            let fx = tx + selfMoveX;
+            let fy = ty + selfMoveY;
+            x += min(innerWidth / 100, (fx - x) / 10);
+            y += min(innerWidth / 100, (fy - y) / 10);
+            let i = 0;
+            pts.forEach((pt) => {
+              const dx = pt.x - x,
+                dy = pt.y - y;
+              const len = hypot(dx, dy);
+              let r = min(2, innerWidth / len / 5);
+              pt.t = 0;
+              const increasing = len < innerWidth / 10 && (i++) < 8;
+              let dir = increasing ? 0.1 : -0.1;
+              if (increasing) {
+                r *= 1.5;
+              }
+              pt.r = r;
+              pt.len = max(0, min(pt.len + dir, 1));
+              paintPt(pt);
+            });
+          }
+        };
+      }
+      
+      const spiders = many(2, spawn);
+      
+      addEventListener('pointermove', (e) => {
+        spiders.forEach(spider => {
+          spider.follow(e.clientX, e.clientY);
+        });
+      });
+      
+      requestAnimationFrame(function anim(t) {
+        if (w !== innerWidth) w = canvas.width = innerWidth;
+        if (h !== innerHeight) h = canvas.height = innerHeight;
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = ctx.strokeStyle = '#e10600';
+        t /= 1000;
+        spiders.forEach(spider => spider.tick(t));
+        requestAnimationFrame(anim);
+      });
+
+      function rnd(x = 1, dx = 0) {
+        return Math.random() * x + dx;
+      }
+
+      function drawLine(x0, y0, x1, y1) {
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        many(100, (i) => {
+          i = (i + 1) / 100;
+          let x = lerp(x0, x1, i);
+          let y = lerp(y0, y1, i);
+          let k = noise(x / 5 + x0, y / 5 + y0) * 2;
+          ctx.lineTo(x + k, y + k);
+        });
+        ctx.stroke();
+      }
+
+      function many(n, f) {
+        return [...Array(n)].map((_, i) => f(i));
+      }
+
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function noise(x, y, t = 101) {
+        let w0 = sin(0.3 * x + 1.4 * t + 2.0 + 2.5 * sin(0.4 * y + -1.3 * t + 1.0));
+        let w1 = sin(0.2 * y + 1.5 * t + 2.8 + 2.3 * sin(0.5 * x + -1.2 * t + 0.5));
+        return w0 + w1;
+      }
+
+      function pt(x, y) {
+        return { x, y };
+      }
+    })();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      AOS.init({
+        duration: 900,
+        easing: 'ease-out-cubic',
+        once: true,
+      });
+
+      document.body.classList.add('site-ready');
+
+      const cursor = document.getElementById('custom-cursor');
+      if (!cursor) return;
+
+      document.body.classList.add('cursor-ready');
+
+      const move = (e) => {
+        cursor.style.setProperty('--cursor-x', e.clientX);
+        cursor.style.setProperty('--cursor-y', e.clientY);
+      };
+
+      window.addEventListener('mousemove', move, { passive: true });
+      window.addEventListener('pointermove', move, { passive: true });
+
+      const isInteractive = (el) => {
+        if (!el) return false;
+        return !!el.closest('a, button, summary, [role="button"], input, textarea, select, label');
+      };
+
+      window.addEventListener('mouseover', (e) => {
+        if (isInteractive(e.target)) cursor.classList.add('is-pointer');
+      }, { passive: true });
+
+      window.addEventListener('mouseout', (e) => {
+        if (isInteractive(e.target)) cursor.classList.remove('is-pointer');
+      }, { passive: true });
+
+      const audio = document.getElementById('mp-audio');
+      const nextBtn = document.getElementById('mp-next');
+      const backBtn = document.getElementById('mp-back');
+      const playBtn = document.getElementById('mp-play');
+      const seekSlider = document.getElementById('mp-seek');
+      const volSlider = document.getElementById('mp-volume');
+      const timeCur = document.getElementById('mp-time-cur');
+      const timeDur = document.getElementById('mp-time-dur');
+      const dragHandle = document.getElementById('mp-drag');
+
+      if (!audio || !nextBtn || !backBtn || !playBtn || !seekSlider || !volSlider || !timeCur || !timeDur || !dragHandle) return;
+
+      const playlist = [
+        "https://raw.githubusercontent.com/yekithegreat-cyber/mp3/main/pouf-salon.fr%20-%20Death%20Note%20-%20(Light%20s%20Theme%20B)%20Music%20(320%20KBps).mp3",
+      ];
+
+      let trackIndex = 0;
+
+      const formatTime = (secs) => {
+        const s = Math.max(0, Math.floor(secs || 0));
+        const m = Math.floor(s / 60);
+        const r = s % 60;
+        return `${m}:${String(r).padStart(2, '0')}`;
+      };
+
+      const loadTrack = (index) => {
+        trackIndex = ((index % playlist.length) + playlist.length) % playlist.length;
+        audio.crossOrigin = 'anonymous';
+        audio.src = playlist[trackIndex];
+        audio.load();
+        seekSlider.value = '0';
+        timeCur.textContent = '0:00';
+        timeDur.textContent = '0:00';
+      };
+
+      const applyVolume = () => {
+        const v = Number(volSlider.value);
+        audio.volume = Number.isFinite(v) ? v : 0.8;
+      };
+
+      const playSafe = async () => {
+        try {
+          await audio.play();
+          playBtn.textContent = 'Pause';
+        } catch (e) {
+          playBtn.textContent = 'Play';
+        }
+      };
+
+      audio.addEventListener('canplay', () => {
+        const d = Number.isFinite(audio.duration) ? audio.duration : 0;
+        seekSlider.max = String(d || 0);
+        timeDur.textContent = formatTime(d);
+      });
+
+      audio.addEventListener('playing', () => {
+        playBtn.textContent = 'Pause';
+      });
+
+      audio.addEventListener('pause', () => {
+        playBtn.textContent = 'Play';
+      });
+
+      audio.addEventListener('waiting', () => {
+      });
+
+      audio.addEventListener('error', () => {
+        playBtn.textContent = 'Play';
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        if (!Number.isFinite(audio.currentTime)) return;
+        if (document.activeElement !== seekSlider) {
+          seekSlider.value = String(audio.currentTime);
+        }
+        timeCur.textContent = formatTime(audio.currentTime);
+      });
+
+      applyVolume();
+      loadTrack(trackIndex);
+
+      volSlider.addEventListener('input', () => {
+        applyVolume();
+      });
+
+      seekSlider.addEventListener('input', () => {
+        timeCur.textContent = formatTime(Number(seekSlider.value));
+      });
+
+      seekSlider.addEventListener('change', () => {
+        const t = Number(seekSlider.value);
+        if (Number.isFinite(t)) audio.currentTime = t;
+      });
+
+      playBtn.addEventListener('click', async () => {
+        if (audio.paused) {
+          await playSafe();
+        } else {
+          audio.pause();
+        }
+      });
+
+      (() => {
+        const mp = document.getElementById('music-player');
+        if (!mp) return;
+
+        let dragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startLeft = 0;
+        let startTop = 0;
+
+        const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+        const setPos = (left, top) => {
+          const maxLeft = window.innerWidth - mp.offsetWidth;
+          const maxTop = window.innerHeight - mp.offsetHeight;
+          mp.style.left = `${clamp(left, 8, Math.max(8, maxLeft - 8))}px`;
+          mp.style.top = `${clamp(top, 8, Math.max(8, maxTop - 8))}px`;
+          mp.style.right = 'auto';
+          mp.style.bottom = 'auto';
+        };
+
+        const onDown = (e) => {
+          if (e.target && e.target.closest('button, input')) return;
+          dragging = true;
+          mp.classList.add('dragging');
+          const rect = mp.getBoundingClientRect();
+          startLeft = rect.left;
+          startTop = rect.top;
+          startX = e.clientX;
+          startY = e.clientY;
+          try { dragHandle.setPointerCapture(e.pointerId); } catch (_) {}
+        };
+
+        const onMove = (e) => {
+          if (!dragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          setPos(startLeft + dx, startTop + dy);
+        };
+
+        const onUp = () => {
+          if (!dragging) return;
+          dragging = false;
+          mp.classList.remove('dragging');
+        };
+
+        dragHandle.addEventListener('pointerdown', onDown);
+        window.addEventListener('pointermove', onMove, { passive: true });
+        window.addEventListener('pointerup', onUp, { passive: true });
+
+        window.addEventListener('resize', () => {
+          const rect = mp.getBoundingClientRect();
+          if (mp.style.left && mp.style.top) setPos(rect.left, rect.top);
+        });
+      })();
+
+      backBtn.addEventListener('click', async () => {
+        loadTrack(trackIndex - 1);
+        applyVolume();
+        await playSafe();
+      });
+
+      nextBtn.addEventListener('click', async () => {
+        loadTrack(trackIndex + 1);
+        applyVolume();
+        await playSafe();
+      });
+
+      audio.addEventListener('ended', async () => {
+        loadTrack(trackIndex + 1);
+        applyVolume();
+        await playSafe();
+      });
+
+      // Video Controls
+      const showcaseVideo = document.getElementById('showcase-video');
+      const playPauseBtn = document.getElementById('video-play-pause');
+      const playIcon = document.getElementById('play-icon');
+      const pauseIcon = document.getElementById('pause-icon');
+      const muteBtn = document.getElementById('video-mute');
+      const volumeIcon = document.getElementById('volume-icon');
+      const muteIcon = document.getElementById('mute-icon');
+      const volumeSlider = document.getElementById('video-volume');
+      const volumeValue = document.getElementById('volume-value');
+
+      if (showcaseVideo && playPauseBtn && muteBtn && volumeSlider) {
+        // Play/Pause functionality
+        playPauseBtn.addEventListener('click', () => {
+          if (showcaseVideo.paused) {
+            showcaseVideo.play();
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+          } else {
+            showcaseVideo.pause();
+            playIcon.classList.remove('hidden');
+            pauseIcon.classList.add('hidden');
+          }
+        });
+
+        // Mute/Unmute functionality
+        muteBtn.addEventListener('click', () => {
+          showcaseVideo.muted = !showcaseVideo.muted;
+          if (showcaseVideo.muted) {
+            volumeIcon.classList.add('hidden');
+            muteIcon.classList.remove('hidden');
+            volumeSlider.value = 0;
+            volumeValue.textContent = '0%';
+          } else {
+            volumeIcon.classList.remove('hidden');
+            muteIcon.classList.add('hidden');
+            volumeSlider.value = showcaseVideo.volume * 100;
+            volumeValue.textContent = Math.round(showcaseVideo.volume * 100) + '%';
+          }
+        });
+
+        // Volume slider functionality
+        volumeSlider.addEventListener('input', (e) => {
+          const volume = e.target.value / 100;
+          showcaseVideo.volume = volume;
+          volumeValue.textContent = Math.round(volume * 100) + '%';
+          
+          if (volume === 0) {
+            showcaseVideo.muted = true;
+            volumeIcon.classList.add('hidden');
+            muteIcon.classList.remove('hidden');
+          } else {
+            showcaseVideo.muted = false;
+            volumeIcon.classList.remove('hidden');
+            muteIcon.classList.add('hidden');
+          }
+        });
+
+        // Initialize volume display
+        volumeValue.textContent = '0%';
+      }
+    });
+  </script>  <!-- NAVBAR -->  <nav id="site-nav" class="w-full fixed top-0 z-50 bg-black/70 backdrop-blur border-b border-line">
+    <div class="max-w-[1400px] mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-3">
+          <img src="https://i.imgur.com/hoNzUGn.png" alt="Belatstrap logo" class="h-12 w-12 object-contain flex-shrink-0" loading="eager" />
+          <span class="text-xs tracking-[0.28em] uppercase">Belatstrap</span>
+        </a>
+        <a href="https://discord.com/invite/3az9TtVCkA" target="_blank" rel="noopener" class="inline-flex items-center justify-center ml-2 hover:opacity-80 transition" aria-label="Join Discord">
+          <img src="https://i.imgur.com/mmgMkV7.png" alt="Discord" class="h-5 w-5 object-contain" />
+        </a>
+      </div>
+      <details class="md:hidden relative">
+        <summary aria-label="Menu" class="list-none cursor-pointer select-none hover:opacity-60 transition">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 7H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 17H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </summary>
+        <div class="absolute right-0 mt-4 w-56 border border-line bg-black shadow-sm">
+          <div class="flex flex-col p-4 gap-4 text-xs tracking-[0.28em] uppercase">
+            <a href="#features" class="lux-link hover:opacity-60 transition">Features</a>
+            <a href="/about" class="lux-link hover:opacity-60 transition">About</a>
+            <a href="/note" class="lux-link hover:opacity-60 transition">Note</a>
+            <a href="#download" class="lux-link hover:opacity-60 transition">Download</a>
+            <a href="fflags.html" class="lux-link hover:opacity-60 transition">Offsets</a>
+            <a href="#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+          </div>
+        </div>
+      </details>
+      <div class="hidden md:flex gap-10 text-xs tracking-[0.28em] uppercase">
+        <a href="#features" class="lux-link hover:opacity-60 transition">Features</a>
+        <a href="/about" class="lux-link hover:opacity-60 transition">About</a>
+        <a href="/note" class="lux-link hover:opacity-60 transition">Note</a>
+        <a href="#download" class="lux-link hover:opacity-60 transition">Download</a>
+        <a href="fflags.html" class="lux-link hover:opacity-60 transition">Offsets</a>
+        <a href="#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+      </div>
+    </div>
+  </nav>
+  <!-- HERO -->
+  <section class="min-h-screen w-full flex items-center justify-center text-center px-6 bg-black">
+    <div class="max-w-4xl pt-28 pb-8" data-aos="fade-up">
+      <h2 class="font-serif text-5xl md:text-7xl font-semibold mb-6 stagger" style="animation-delay: 60ms;">
+        Belat <span class="text-brandRed font-sans tracking-[0.02em]">INJECTOR</span><br />
+      </h2>
+      <p class="text-white/70 text-lg md:text-xl mb-10 stagger" style="animation-delay: 140ms;">
+        Belatstrap gives you full control over Roblox Fast Flags — optimize performance, unlock hidden options, and manage configurations safely.
+      </p>
+      <div class="flex flex-col md:flex-row gap-4 justify-center stagger" style="animation-delay: 220ms;">
+        <a href="#download" class="glow-cta glow-primary motion inline-flex items-center justify-center px-8 py-4 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition">Get Belatstrap</a>
+        <a href="#features" class="motion inline-flex items-center justify-center px-8 py-4 border border-line text-xs tracking-[0.28em] uppercase hover:bg-white/5 transition">Explore Features</a>
+      </div>
+    </div>
+  </section>
+  <section class="w-full px-6 -mt-16 bg-black" data-aos="fade-up" style="margin-top: -4rem;">
+    <div class="max-w-3xl mx-auto">
+      <div class="relative w-full aspect-video overflow-hidden rounded-lg mx-auto">
+        <video id="showcase-video" class="absolute inset-0 w-full h-full object-contain" autoplay muted loop playsinline preload="metadata">
+          <source src="https://files.catbox.moe/y7uta9.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <!-- Video Controls Below Video -->
+      <div class="flex items-center gap-3 bg-black/60 backdrop-blur-sm p-3 rounded-lg mt-3">
+        <!-- Play/Pause Button -->
+        <button id="video-play-pause" type="button" class="flex items-center justify-center w-10 h-10 bg-brandRed hover:bg-red-700 rounded-full transition-colors flex-shrink-0" aria-label="Play/Pause">
+          <svg id="play-icon" class="w-5 h-5 text-white hidden" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg id="pause-icon" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+          </svg>
+        </button>
+        <!-- Volume Control -->
+        <div class="flex items-center gap-2 flex-1">
+          <button id="video-mute" type="button" class="flex items-center justify-center w-8 h-8 text-white hover:text-brandRed transition-colors flex-shrink-0" aria-label="Mute/Unmute">
+            <svg id="volume-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+            </svg>
+            <svg id="mute-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+          </button>
+          <input id="video-volume" type="range" min="0" max="100" value="0" class="flex-1 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-brandRed" style="min-width: 100px;" aria-label="Volume">
+          <span id="volume-value" class="text-white text-sm font-medium w-10 text-right flex-shrink-0">0%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FEATURES -->
+  <section id="features" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-[1400px] mx-auto">
+      <h3 class="font-serif text-4xl font-semibold mb-14 text-center">Core Features</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">FFLAGS Presets</h4>
+          <p class="text-white/70 leading-relaxed">Apply performance, FPS boost, graphics, and stability presets with one click.</p>
+        </div>
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">Advanced Tweaks</h4>
+          <p class="text-white/70 leading-relaxed">Edit hidden Roblox flags not accessible from the normal client.</p>
+        </div>
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">User Friendly UI</h4>
+          <p class="text-white/70 leading-relaxed">Clean black & red interface that doesn't get in your way.</p>
+        </div>
+        <div class="border border-line bg-black p-8" data-aos="zoom-in">
+          <h4 class="text-xs tracking-[0.28em] uppercase mb-3">Regular Updates</h4>
+          <p class="text-white/70 leading-relaxed">Always compatible with the latest Roblox updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FAQ -->
+  <section id="faq" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto">
+      <h3 class="font-serif text-4xl font-semibold mb-12 text-center">Frequently Asked Questions</h3>
+      <div class="space-y-6">
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Is Belatstrap safe?</h4>
+          <p class="text-white/70 mt-2">Yeah. Uses memory injection to tweak FFLAGS in Roblox's process - just config flags, not touching game code or files.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Can I get banned using Belatstrap?</h4>
+          <p class="text-white/70 mt-2">We use memory injection with the safest methods available. Keeps detection risk low while still working properly. Can't guarantee 100% safety but we've built it to be as stealthy as possible.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Is it free?</h4>
+          <p class="text-white/70 mt-2">Yep, completely free.</p>
+        </div>
+        <div class="border border-line bg-black p-6">
+          <h4 class="font-semibold text-lg">Why does it need your User ID?</h4>
+          <p class="text-white/70 mt-2">Because the injector only works if your account is on the server. If your account is not on the server, the injector will stop working, and your User ID will be terminated. So make sure you join the Discord server.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- DOWNLOAD -->
+  <section id="download" class="w-full px-6 py-24 bg-black" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto text-center">
+      <h3 class="font-serif text-4xl font-semibold mb-6">Download Belatstrap</h3>
+      <p class="text-white/60 mb-10">Compatible with modern Roblox clients. Windows supported.</p>
+      <a href="https://github.com/inskepert67-commits/Belastrap.exe/blob/main/Belatstrap.exe?raw=1" download="Belatstrap.exe" class="glow-cta glow-primary motion inline-flex items-center justify-center px-10 py-5 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition">
+        Download Now
+      </a>
+    </div>
+  </section>
+  <!-- DONATE CTA -->
+  <section class="w-full px-6 py-12 bg-black flex justify-center" data-aos="fade-up">
+    <button id="donate-open" type="button" class="donate-btn motion inline-flex items-center justify-center px-8 py-3 border border-line text-xs tracking-[0.28em] uppercase hover:bg-white/5 transition" aria-haspopup="dialog" aria-controls="donate-modal">Donate This project</button>
+  </section>
+  
+  <div id="donate-modal" role="dialog" aria-modal="true" aria-labelledby="donate-title" class="donate-modal" hidden>
+    <div class="donate-backdrop" data-donate-close></div>
+    <div class="donate-panel" role="document">
+      <div class="donate-head">
+        <h3 id="donate-title" class="font-serif">Support This Project</h3>
+        <button id="donate-close" type="button" class="donate-x" aria-label="Close" data-donate-close>×</button>
+      </div>
+      <div class="donate-body">
+        <p class="text-white/70 leading-relaxed">Choose a donation method:</p>
+
+        <div class="donate-grid">
+          <div class="donate-card">
+            <div class="donate-label">URL</div>
+            <a href="https://www.paypal.com/qrcodes/p2pqrc/2ZBMHBWJAW6A2" target="_blank" rel="noopener" class="donate-link">https://www.paypal.com/qrcodes/p2pqrc/2ZBMHBWJAW6A2</a>
+          </div>
+
+          <div class="donate-card">
+            <div class="donate-label">QR CODE</div>
+            <a href="https://iili.io/f6Xtwep.jpg" target="_blank" rel="noopener" class="donate-link">Open QR image</a>
+            <div class="donate-qr-wrap">
+              <a href="https://freeimage.host/" target="_blank" rel="noopener"><img src="https://iili.io/f6Xtwep.jpg" alt="f6Xtwep.jpg" border="0" class="donate-qr" loading="lazy"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="donate-foot">
+        <button type="button" class="motion px-6 py-3 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition" data-donate-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="note-modal" role="dialog" aria-modal="true" aria-labelledby="note-title" class="note-modal" hidden>
+    <div class="note-backdrop" data-note-close></div>
+    <div class="note-panel" role="document">
+      <div class="note-head">
+        <h3 id="note-title" class="font-serif">Important Notice</h3>
+        <button id="note-close" type="button" class="note-x" aria-label="Close" data-note-close">×</button>
+      </div>
+      <div class="note-body">
+        <div class="note-kicker">⚠️ Important Notice About Antivirus Detections</div>
+        <p>If your antivirus software is flagging this Tool fflag manager as a virus or malicious software, <strong>this is a false positive.</strong> The application is completely safe and contains no malware.</p>
+
+        <h4 class="note-h"><span class="note-ico">❓</span> Why is this happening?</h4>
+        <p>This tool works by modifying feature flags (fflags) in other processes — that's literally its entire purpose. To do this, it needs to write to the memory of running applications. Antivirus programs see this behavior and automatically flag it as "suspicious" because malware also writes to other processes.</p>
+
+        <p class="note-sub">The reality:</p>
+        <ul class="note-checklist">
+          <li><span class="note-check">✅</span><span>This is legitimate functionality, not a virus</span></li>
+          <li><span class="note-check">✅</span><span>The tool does exactly what it’s supposed to do — nothing more</span></li>
+          <li><span class="note-check">✅</span><span>Thousands of legitimate programs (game mods, trainers, development tools) get flagged the same way</span></li>
+        </ul>
+
+        <p><strong>This is NOT a virus.</strong> It's flagged because of how it works, not because it's doing anything harmful.</p>
+
+        <div class="note-divider" role="separator" aria-hidden="true"></div>
+
+        <h4 class="note-h"><span class="note-ico">✅</span> What should you do?</h4>
+        <ol class="note-steps">
+          <li>Add the application to your antivirus exclusion/whitelist</li>
+          <li>Only download from the official source to ensure you have the real version</li>
+          <li>If you're still concerned, here is the file hashed source:</li>
+        </ol>
+
+        <p><a href="https://hashed-belatstrap.vercel.app/" target="_blank" rel="noopener" class="note-link">REPORT HASHED <span class="note-ext" aria-hidden="true">↗</span></a></p>
+
+        <div class="note-divider" role="separator" aria-hidden="true"></div>
+
+        <h4 class="note-h">HANDLE CRASHED ROBLOX <span class="note-badge">[BETA]</span></h4>
+        <ul class="note-checklist">
+          <li><span class="note-check">•</span><span><strong>HWID (SPOOFER) [AUTO]</strong></span></li>
+          <li><span class="note-check">•</span><span><strong>MAC ADDRESS (SPOOFER) [MANUAL]</strong></span></li>
+          <li><span class="note-check">•</span><span><strong>False Positive [VIRUSES]</strong></span></li>
+          <li><span class="note-check">•</span><span><strong>Memory Safe Injection [STEALTH]</strong></span></li>
+        </ul>
+      </div>
+      <div class="note-foot">
+        <button type="button" class="motion px-6 py-3 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition" data-note-close>Close</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    .note-modal { position: fixed; inset: 0; z-index: 99999; }
+    .note-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.72); }
+    .note-panel { position: relative; width: min(920px, calc(100vw - 32px)); margin: 84px auto; background: rgba(18,18,18,0.88); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,0.6); display: flex; flex-direction: column; max-height: calc(100vh - 140px); }
+    #note-modal, #note-modal * { cursor: none !important; }
+    body.cursor-ready #custom-cursor { z-index: 100000 !important; }
+    .note-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); flex: 0 0 auto; }
+    .note-head h3 { margin: 0; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .note-x { width: 40px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; font-size: 22px; line-height: 1; }
+    .note-x:hover { background: rgba(255,255,255,0.10); }
+    .note-body { padding: 22px 22px 2px; text-align: left; color: rgba(255,255,255,0.88); overflow: auto; -webkit-overflow-scrolling: touch; flex: 1 1 auto; }
+    .note-kicker { color: #fff; font-weight: 700; margin-bottom: 14px; }
+    .note-h { margin: 18px 0 10px; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .note-ico { width: 20px; display: inline-flex; align-items: center; justify-content: center; }
+    .note-body p { margin: 10px 0; line-height: 1.7; }
+    .note-sub { margin-top: 12px; margin-bottom: 10px; color: rgba(255,255,255,0.78); }
+    .note-checklist { list-style: none; padding: 0; margin: 0 0 14px 0; }
+    .note-checklist li { display: flex; gap: 10px; align-items: flex-start; margin: 10px 0; }
+    .note-check { width: 18px; flex: 0 0 18px; line-height: 1.2; }
+    .note-divider { height: 1px; background: rgba(255,255,255,0.10); margin: 20px 0; }
+    .note-badge { color: #111827; font-weight: 800; background: rgba(250, 204, 21, 0.95); border: 1px solid rgba(250, 204, 21, 0.65); padding: 2px 8px; border-radius: 999px; letter-spacing: 0.08em; }
+    .note-steps { margin: 10px 0 14px 22px; }
+    .note-link { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+    .note-link:hover { color: #e10600; }
+    .note-ext { opacity: 0.75; }
+    .note-foot { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: flex-end; flex: 0 0 auto; }
+    @media (max-width: 480px) { .note-panel { margin: 64px auto; max-height: calc(100vh - 120px); } }
+
+    .donate-btn { position: relative; overflow: hidden; border-radius: 999px; }
+    .donate-btn:active { transform: translateY(1px) scale(0.99); }
+    .donate-ripple { position: absolute; border-radius: 999px; pointer-events: none; transform: translate(-50%, -50%) scale(0); background: rgba(225, 6, 0, 0.35); animation: donateRipple 520ms ease-out forwards; }
+    @keyframes donateRipple { to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+
+    .donate-modal { position: fixed; inset: 0; z-index: 99998; }
+    .donate-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.78); opacity: 0; transition: opacity 220ms ease; }
+    .donate-panel { position: relative; width: min(760px, calc(100vw - 32px)); margin: 96px auto; background: rgba(18,18,18,0.90); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,0.6); display: flex; flex-direction: column; max-height: calc(100vh - 180px); transform: translateY(14px) scale(0.98); opacity: 0; transition: transform 260ms cubic-bezier(.2,.8,.2,1), opacity 260ms ease; }
+    .donate-modal.is-open .donate-backdrop { opacity: 1; }
+    .donate-modal.is-open .donate-panel { transform: translateY(0) scale(1); opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .donate-backdrop, .donate-panel { transition: none !important; } .donate-ripple { animation: none !important; } }
+
+    .donate-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.12); flex: 0 0 auto; }
+    .donate-head h3 { margin: 0; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .donate-x { width: 40px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; font-size: 22px; line-height: 1; transition: transform 140ms ease, background 140ms ease; }
+    .donate-x:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
+    .donate-body { padding: 18px 18px 8px; text-align: left; color: rgba(255,255,255,0.90); overflow: auto; -webkit-overflow-scrolling: touch; flex: 1 1 auto; }
+    .donate-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+    @media (min-width: 720px) { .donate-grid { grid-template-columns: 1fr 1fr; } }
+    .donate-card { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; }
+    .donate-card:hover { transform: translateY(-2px); border-color: rgba(225, 6, 0, 0.65); background: rgba(255,255,255,0.06); }
+    .donate-label { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 8px; }
+    .donate-link { color: #fff; text-decoration: underline; text-underline-offset: 4px; word-break: break-all; }
+    .donate-link:hover { color: #e10600; }
+    .donate-qr-wrap { margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.10); background: rgba(0,0,0,0.35); }
+    .donate-qr { width: 100%; height: auto; display: block; }
+    iframe.donate-qr { height: 280px; border: 0; background: transparent; }
+    .donate-foot { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: flex-end; flex: 0 0 auto; }
+    @media (max-width: 480px) { .donate-panel { margin: 72px auto; max-height: calc(100vh - 140px); } }
+  </style>
+
+  <script>
+    (function () {
+      const openBtn = document.getElementById('note-open');
+      const modal = document.getElementById('note-modal');
+      if (!openBtn || !modal) return;
+
+      const closeBtn = document.getElementById('note-close');
+      const closeEls = modal.querySelectorAll('[data-note-close]');
+      let lastFocus = null;
+
+      const focusFirst = () => {
+        const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        for (const el of focusable) {
+          if (!el.hasAttribute('disabled') && el.offsetParent !== null) {
+            el.focus();
+            return;
+          }
+        }
+      };
+
+      const open = () => {
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        focusFirst();
+      };
+
+      const close = () => {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      };
+
+      openBtn.addEventListener('click', open);
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      closeEls.forEach((el) => el.addEventListener('click', close));
+
+      document.addEventListener('keydown', (e) => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const openBtn = document.getElementById('donate-open');
+      const modal = document.getElementById('donate-modal');
+      if (!openBtn || !modal) return;
+
+      const closeBtn = document.getElementById('donate-close');
+      const closeEls = modal.querySelectorAll('[data-donate-close]');
+      let lastFocus = null;
+      let isClosing = false;
+
+      const focusFirst = () => {
+        const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        for (const el of focusable) {
+          if (!el.hasAttribute('disabled') && el.offsetParent !== null) {
+            el.focus();
+            return;
+          }
+        }
+      };
+
+      const open = () => {
+        if (!modal.hidden) return;
+        isClosing = false;
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          modal.classList.add('is-open');
+          focusFirst();
+        });
+      };
+
+      const close = () => {
+        if (modal.hidden || isClosing) return;
+        isClosing = true;
+        modal.classList.remove('is-open');
+        const panel = modal.querySelector('.donate-panel');
+        const finish = () => {
+          modal.hidden = true;
+          document.body.style.overflow = '';
+          isClosing = false;
+          if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+        };
+
+        if (!panel) {
+          finish();
+          return;
+        }
+
+        const onEnd = (e) => {
+          if (e && e.target !== panel) return;
+          panel.removeEventListener('transitionend', onEnd);
+          finish();
+        };
+        panel.addEventListener('transitionend', onEnd);
+        setTimeout(() => {
+          try { onEnd({ target: panel }); } catch (_) {}
+        }, 360);
+      };
+
+      const ripple = (e) => {
+        const btn = e.currentTarget;
+        if (!btn) return;
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 1.4;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const el = document.createElement('span');
+        el.className = 'donate-ripple';
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        btn.appendChild(el);
+        setTimeout(() => el.remove(), 600);
+      };
+
+      openBtn.addEventListener('click', (e) => {
+        ripple(e);
+        open();
+      });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      closeEls.forEach((el) => el.addEventListener('click', close));
+
+      document.addEventListener('keydown', (e) => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
+
+</body>
+</html>

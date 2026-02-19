@@ -1,0 +1,242 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Belatstrap</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/hoNzUGn.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&family=Special+Gothic+Expanded+One&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./cursor.css" />
+  <link rel="stylesheet" href="./trail.css" />
+  <script src="./trail.min.js" defer></script>
+  <meta name="description" content="Learn more about Belatstrap." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#e10600',
+            ink: '#0b0b0b',
+            paper: '#ffffff',
+            fog: '#f4f4f4',
+            line: 'rgba(255, 255, 255, 0.14)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #000 !important; color: #fff !important; font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; position: relative; min-height: 100vh; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: url('https://i.imgur.com/naK1hruh.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      filter: grayscale(20%) brightness(90%);
+      opacity: 0.3;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.55);
+      pointer-events: none;
+    }
+
+    section.bg-black { background-color: transparent !important; }
+    footer.bg-black { background-color: rgba(0, 0, 0, 0.62) !important; backdrop-filter: blur(10px); }
+    .border.bg-black { background-color: rgba(0, 0, 0, 0.55) !important; backdrop-filter: blur(10px); }
+    #music-player { backdrop-filter: blur(10px); }
+    html { scroll-behavior: smooth; }
+    .font-serif { font-family: "Gravitas One", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    .font-sans { font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .font-gothic { font-family: "Special Gothic Expanded One", "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .lux-link { position: relative; }
+    .lux-link::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: #e10600; transform: scaleX(0); transform-origin: left; transition: transform 240ms ease; }
+    .lux-link:hover::after { transform: scaleX(1); }
+    #site-nav.nav-scrolled { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); background-color: rgba(0, 0, 0, 0.82); }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    /* Spider Web Canvas Overlay */
+    #spiderWebCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="text-white bg-black font-sans cursor-ready">
+  <canvas id="spiderWebCanvas"></canvas>
+  <div id="custom-cursor" aria-hidden="true"></div>
+
+  <nav id="site-nav" class="w-full fixed top-0 z-50 bg-black/70 backdrop-blur border-b border-line">
+    <div class="max-w-[1400px] mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3">
+          <img src="https://i.imgur.com/hoNzUGn.png" alt="Belatstrap logo" class="h-12 w-12 object-contain flex-shrink-0" loading="eager" />
+          <span class="text-xs tracking-[0.28em] uppercase">Belatstrap</span>
+        </a>
+      </div>
+      <div class="hidden md:flex gap-10 text-xs tracking-[0.28em] uppercase">
+        <a href="/" class="lux-link hover:opacity-60 transition">Home</a>
+        <a href="/about" class="lux-link hover:opacity-60 transition">About</a>
+        <a href="/#download" class="lux-link hover:opacity-60 transition">Download</a>
+        <a href="/#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="min-h-screen w-full flex items-center justify-center text-center px-6 bg-black">
+    <div class="max-w-3xl pt-28 pb-20">
+      <h1 class="font-serif text-5xl md:text-6xl font-semibold mb-6">About Belatstrap</h1>
+      <p class="text-white/70 text-lg leading-relaxed mb-8">
+        Roblox FFLAGS manager that puts you in control of your game's performance.
+      </p>
+
+      <div class="mt-10 text-left max-w-2xl mx-auto">
+        <ul class="space-y-6 text-white/70 text-xl">
+          <li class="flex items-start gap-4">
+            <span class="text-brandRed text-4xl mt-0">●</span>
+            <span>Tweak hidden flags that aren't accessible in normal Roblox settings</span>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="text-brandRed text-4xl mt-0">●</span>
+            <span>Unlock FPS, boost graphics, or optimize for potato PCs</span>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="text-brandRed text-4xl mt-0">●</span>
+            <span>Everything's reversible if something breaks</span>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="text-brandRed text-4xl mt-0">●</span>
+            <span>Clean interface that doesn't require a manual to figure out</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-10 flex flex-col md:flex-row gap-4 justify-center">
+        <a href="/" class="inline-flex items-center justify-center px-8 py-4 border border-line text-xs tracking-[0.28em] uppercase hover:bg-white/5 transition">Back to Home</a>
+        <a href="/#download" class="inline-flex items-center justify-center px-8 py-4 bg-brandRed text-black text-xs tracking-[0.28em] uppercase hover:bg-red-700 transition">Download</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const cursor = document.getElementById('custom-cursor');
+      if (!cursor) return;
+
+      const move = (e) => {
+        cursor.style.setProperty('--cursor-x', e.clientX);
+        cursor.style.setProperty('--cursor-y', e.clientY);
+      };
+
+      window.addEventListener('mousemove', move, { passive: true });
+
+      const isInteractive = (el) => {
+        if (!el) return false;
+        return !!el.closest('a, button, summary, [role="button"], input, textarea, select, label');
+      };
+
+      window.addEventListener('mouseover', (e) => {
+        if (isInteractive(e.target)) cursor.classList.add('is-pointer');
+      }, { passive: true });
+
+      window.addEventListener('mouseout', (e) => {
+        if (isInteractive(e.target)) cursor.classList.remove('is-pointer');
+      }, { passive: true });
+
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('site-nav');
+        if (!nav) return;
+        if (window.scrollY > 10) nav.classList.add('nav-scrolled');
+        else nav.classList.remove('nav-scrolled');
+      }, { passive: true });
+
+      document.body.classList.add('cursor-ready');
+    });
+  </script>
+  <script>
+    // New Spider Cursor Follower - Inlined
+    (function() {
+      const canvas = document.getElementById('spiderWebCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      const { sin, cos, PI, hypot, min, max } = Math;
+      function spawn() {
+        const pts = many(333, () => ({ x: rnd(innerWidth), y: rnd(innerHeight), len: 0, r: 0 }));
+        const pts2 = many(9, (i) => ({ x: cos((i / 9) * PI * 2), y: sin((i / 9) * PI * 2) }));
+        let seed = rnd(100), tx = rnd(innerWidth), ty = rnd(innerHeight), x = rnd(innerWidth), y = rnd(innerHeight);
+        let kx = rnd(0.5, 0.5), ky = rnd(0.5, 0.5), walkRadius = pt(rnd(50, 50), rnd(50, 50)), r = innerWidth / rnd(100, 150);
+        function paintPt(pt) {
+          pts2.forEach((pt2) => {
+            if (!pt.len) return;
+            drawLine(lerp(x + pt2.x * r, pt.x, pt.len * pt.len), lerp(y + pt2.y * r, pt.y, pt.len * pt.len), x + pt2.x * r, y + pt2.y * r);
+          });
+        }
+        return {
+          follow(x, y) { tx = x; ty = y; },
+          tick(t) {
+            const selfMoveX = cos(t * kx + seed) * walkRadius.x, selfMoveY = sin(t * ky + seed) * walkRadius.y;
+            let fx = tx + selfMoveX, fy = ty + selfMoveY;
+            x += min(innerWidth / 100, (fx - x) / 10); y += min(innerWidth / 100, (fy - y) / 10);
+            let i = 0;
+            pts.forEach((pt) => {
+              const dx = pt.x - x, dy = pt.y - y, len = hypot(dx, dy);
+              let r = min(2, innerWidth / len / 5);
+              pt.t = 0;
+              const increasing = len < innerWidth / 10 && (i++) < 8;
+              let dir = increasing ? 0.1 : -0.1;
+              if (increasing) r *= 1.5;
+              pt.r = r; pt.len = max(0, min(pt.len + dir, 1));
+              paintPt(pt);
+            });
+          }
+        };
+      }
+      const spiders = many(2, spawn);
+      addEventListener('pointermove', (e) => { spiders.forEach(spider => spider.follow(e.clientX, e.clientY)); });
+      requestAnimationFrame(function anim(t) {
+        if (w !== innerWidth) w = canvas.width = innerWidth;
+        if (h !== innerHeight) h = canvas.height = innerHeight;
+        ctx.clearRect(0, 0, w, h); ctx.fillStyle = ctx.strokeStyle = '#e10600'; t /= 1000;
+        spiders.forEach(spider => spider.tick(t)); requestAnimationFrame(anim);
+      });
+      function rnd(x = 1, dx = 0) { return Math.random() * x + dx; }
+      function drawLine(x0, y0, x1, y1) {
+        ctx.beginPath(); ctx.moveTo(x0, y0);
+        many(100, (i) => {
+          i = (i + 1) / 100; let x = lerp(x0, x1, i), y = lerp(y0, y1, i), k = noise(x / 5 + x0, y / 5 + y0) * 2;
+          ctx.lineTo(x + k, y + k);
+        });
+        ctx.stroke();
+      }
+      function many(n, f) { return [...Array(n)].map((_, i) => f(i)); }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function noise(x, y, t = 101) {
+        let w0 = sin(0.3 * x + 1.4 * t + 2.0 + 2.5 * sin(0.4 * y + -1.3 * t + 1.0));
+        let w1 = sin(0.2 * y + 1.5 * t + 2.8 + 2.3 * sin(0.5 * x + -1.2 * t + 0.5));
+        return w0 + w1;
+      }
+      function pt(x, y) { return { x, y }; }
+    })();
+  </script>
+</body>
+</html>

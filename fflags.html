@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FFLAGS Offsets - Belatstrap</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/hoNzUGn.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gravitas+One&family=Special+Gothic+Expanded+One&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cursor.css" />
+  <link rel="stylesheet" href="trail.css" />
+  <script src="trail.min.js" defer></script>
+  <meta name="description" content="FFLAGS Offsets - Memory offsets for Roblox Fast Flags." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#e10600',
+            ink: '#0b0b0b',
+            paper: '#ffffff',
+            fog: '#f4f4f4',
+            line: 'rgba(255, 255, 255, 0.14)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #000 !important; color: #fff !important; font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; position: relative; min-height: 100vh; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: url('https://i.imgur.com/naK1hruh.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      filter: grayscale(20%) brightness(90%);
+      opacity: 0.3;
+      transform: translateZ(0);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.55);
+      pointer-events: none;
+    }
+
+    section.bg-black { background-color: transparent !important; }
+    .font-serif { font-family: "Gravitas One", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    .font-sans { font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .font-gothic { font-family: "Special Gothic Expanded One", "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important; }
+    .page-enter { animation: pageEnter 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes pageEnter {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .lux-link { position: relative; }
+    .lux-link::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 1px; background: #e10600; transform: scaleX(0); transform-origin: left; transition: transform 240ms ease; }
+    .lux-link:hover::after { transform: scaleX(1); }
+    .glow-cta { position: relative; }
+    .glow-cta::before { content: ""; position: absolute; inset: -2px; background: radial-gradient(60% 60% at 50% 50%, rgba(225, 6, 0, 0.55) 0%, rgba(225, 6, 0, 0) 70%); filter: blur(10px); opacity: 0.85; z-index: -1; }
+    .glow-cta { animation: ctaPulse 2.6s ease-in-out infinite; }
+    @keyframes ctaPulse {
+      0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(225, 6, 0, 0); }
+      50% { transform: translateY(-1px); box-shadow: 0 0 34px rgba(225, 6, 0, 0.35); }
+    }
+
+    .motion {
+      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease, opacity 160ms ease, background-color 160ms ease, border-color 160ms ease;
+      will-change: transform;
+    }
+
+    .motion:active {
+      transform: scale(0.98);
+    }
+
+    .glow-primary {
+      box-shadow: 0 0 0 rgba(225, 6, 0, 0);
+    }
+
+    .glow-primary:hover {
+      box-shadow: 0 0 26px rgba(225, 6, 0, 0.28);
+      filter: drop-shadow(0 0 10px rgba(225, 6, 0, 0.22));
+    }
+
+    /* Spider Web Canvas Overlay */
+    #spiderWebCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 1;
+    }
+
+    /* FFLAGS Box Styles */
+    .fflags-box {
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid rgba(225, 6, 0, 0.3);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      transition: all 0.3s ease;
+    }
+    
+    .fflags-box:hover {
+      border-color: rgba(225, 6, 0, 0.6);
+      box-shadow: 0 25px 70px rgba(225, 6, 0, 0.2);
+    }
+
+    .fflags-header {
+      background: linear-gradient(135deg, rgba(225, 6, 0, 0.1), rgba(225, 6, 0, 0.05));
+      border-bottom: 1px solid rgba(225, 6, 0, 0.2);
+    }
+
+    .offset-item {
+      font-family: "Zalando Sans Expanded", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .offset-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-left-color: #e10600;
+      padding-left: 20px;
+    }
+
+    .offset-value {
+      color: #e10600;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="text-white bg-black font-sans page-enter">
+  <canvas id="spiderWebCanvas"></canvas>
+  <div id="custom-cursor" aria-hidden="true"></div>
+  
+  <!-- NAVIGATION -->
+  <nav id="site-nav" class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-line">
+    <div class="max-w-[1400px] mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <a href="strapper.html" class="flex items-center gap-3">
+          <img src="https://i.imgur.com/hoNzUGn.png" alt="Belatstrap logo" class="h-12 w-12 object-contain flex-shrink-0" loading="eager" />
+          <span class="text-xs tracking-[0.28em] uppercase">Belatstrap</span>
+        </a>
+        <a href="https://discord.com/invite/3az9TtVCkA" target="_blank" rel="noopener" class="inline-flex items-center justify-center ml-2 hover:opacity-80 transition" aria-label="Join Discord">
+          <img src="https://i.imgur.com/mmgMkV7.png" alt="Discord" class="h-5 w-5 object-contain" />
+        </a>
+      </div>
+      <div class="hidden md:flex gap-10 text-xs tracking-[0.28em] uppercase">
+        <a href="strapper.html#features" class="lux-link hover:opacity-60 transition">Features</a>
+        <a href="about.html" class="lux-link hover:opacity-60 transition">About</a>
+        <a href="note.html" class="lux-link hover:opacity-60 transition">Note</a>
+        <a href="strapper.html#download" class="lux-link hover:opacity-60 transition">Download</a>
+        <a href="fflags.html" class="lux-link hover:opacity-60 transition text-brandRed">Offsets</a>
+        <a href="strapper.html#faq" class="lux-link hover:opacity-60 transition">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <section class="min-h-screen w-full flex items-center justify-center px-6 py-20">
+    <div class="max-w-4xl w-full">
+      <div class="fflags-box p-8" data-aos="fade-up">
+        <!-- Header -->
+        <div class="fflags-header p-6 -m-8 mb-8 rounded-t-lg">
+          <div class="flex flex-col items-center">
+            <h2 class="font-serif text-3xl md:text-4xl font-semibold mb-2">
+              <span class="text-brandRed font-sans tracking-[0.02em]">FFLAGS</span> OFFSETS
+            </h2>
+            <!-- Full Dump Button -->
+            <a href="dumped.html" class="w-full max-w-xs mx-auto mb-2 block text-center px-6 py-3 text-base font-medium text-white transition-all duration-200 bg-brandRed hover:bg-brandRed/90 rounded-lg flex items-center justify-center gap-2 motion glow-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+              FULL DUMPED
+            </a>
+            <p class="text-center text-white/70">Roblox Fast Flags Memory Offsets Database</p>
+          </div>
+        </div>
+
+        <!-- Offsets Content -->
+        <div class="space-y-4 max-h-96 overflow-y-auto custom-scrollbar">
+                                                                                                                        
+                                      <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">ACEAnimationFromVideoCreatorServiceWithAssetImport</span>
+              <span class="offset-value">0x77d8058</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">ADS4948SendUniverseIdToEventStream</span>
+              <span class="offset-value">0x78194a8</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AECRingBufferSizeTenthsMs</span>
+              <span class="offset-value">0x69fa9cc</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AEGIS2ActivateEnableChatButtonTelemetry</span>
+              <span class="offset-value">0x77971d8</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AESAddCreatorIdToSearch3</span>
+              <span class="offset-value">0x77f36b8</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AESEnableAvatarThumbnailRefresh</span>
+              <span class="offset-value">0x77a9448</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AESEnableGetHeadShapes</span>
+              <span class="offset-value">0x77a9a08</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AESEnableTimedOptions2</span>
+              <span class="offset-value">0x77a9748</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AESErrorOnArchivableFalse</span>
+              <span class="offset-value">0x77a9ac8</span>
+            </div>
+          </div>          <div class="offset-item p-4 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm">AESGetOutfitsPaginationToken</span>
+              <span class="offset-value">0x77b2838</span>
+            </div>
+          </div></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // New Spider Cursor Follower - Inlined
+    (function() {
+      const canvas = document.getElementById('spiderWebCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      const { sin, cos, PI, hypot, min, max } = Math;
+      function spawn() {
+        const pts = many(333, () => ({ x: rnd(innerWidth), y: rnd(innerHeight), len: 0, r: 0 }));
+        const pts2 = many(9, (i) => ({ x: cos((i / 9) * PI * 2), y: sin((i / 9) * PI * 2) }));
+        let seed = rnd(100), tx = rnd(innerWidth), ty = rnd(innerHeight), x = rnd(innerWidth), y = rnd(innerHeight);
+        let kx = rnd(0.5, 0.5), ky = rnd(0.5, 0.5), walkRadius = pt(rnd(50, 50), rnd(50, 50)), r = innerWidth / rnd(100, 150);
+        function paintPt(pt) {
+          pts2.forEach((pt2) => {
+            if (!pt.len) return;
+            drawLine(lerp(x + pt2.x * r, pt.x, pt.len * pt.len), lerp(y + pt2.y * r, pt.y, pt.len * pt.len), x + pt2.x * r, y + pt2.y * r);
+          });
+        }
+        return {
+          follow(x, y) { tx = x; ty = y; },
+          tick(t) {
+            const selfMoveX = cos(t * kx + seed) * walkRadius.x, selfMoveY = sin(t * ky + seed) * walkRadius.y;
+            let fx = tx + selfMoveX, fy = ty + selfMoveY;
+            x += min(innerWidth / 100, (fx - x) / 10); y += min(innerWidth / 100, (fy - y) / 10);
+            let i = 0;
+            pts.forEach((pt) => {
+              const dx = pt.x - x, dy = pt.y - y, len = hypot(dx, dy);
+              let r = min(2, innerWidth / len / 5);
+              pt.t = 0;
+              const increasing = len < innerWidth / 10 && (i++) < 8;
+              let dir = increasing ? 0.1 : -0.1;
+              if (increasing) r *= 1.5;
+              pt.r = r; pt.len = max(0, min(pt.len + dir, 1));
+              paintPt(pt);
+            });
+          }
+        };
+      }
+      const spiders = many(2, spawn);
+      addEventListener('pointermove', (e) => { spiders.forEach(spider => spider.follow(e.clientX, e.clientY)); });
+      requestAnimationFrame(function anim(t) {
+        if (w !== innerWidth) w = canvas.width = innerWidth;
+        if (h !== innerHeight) h = canvas.height = innerHeight;
+        ctx.clearRect(0, 0, w, h); ctx.fillStyle = ctx.strokeStyle = '#e10600'; t /= 1000;
+        spiders.forEach(spider => spider.tick(t)); requestAnimationFrame(anim);
+      });
+      function rnd(x = 1, dx = 0) { return Math.random() * x + dx; }
+      function drawLine(x0, y0, x1, y1) {
+        ctx.beginPath(); ctx.moveTo(x0, y0);
+        many(100, (i) => {
+          i = (i + 1) / 100; let x = lerp(x0, x1, i), y = lerp(y0, y1, i), k = noise(x / 5 + x0, y / 5 + y0) * 2;
+          ctx.lineTo(x + k, y + k);
+        });
+        ctx.stroke();
+      }
+      function many(n, f) { return [...Array(n)].map((_, i) => f(i)); }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function noise(x, y, t = 101) {
+        let w0 = sin(0.3 * x + 1.4 * t + 2.0 + 2.5 * sin(0.4 * y + -1.3 * t + 1.0));
+        let w1 = sin(0.2 * y + 1.5 * t + 2.8 + 2.3 * sin(0.5 * x + -1.2 * t + 0.5));
+        return w0 + w1;
+      }
+      function pt(x, y) { return { x, y }; }
+    })();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      AOS.init({
+        duration: 900,
+        easing: 'ease-out-cubic',
+        once: true,
+      });
+
+      document.body.classList.add('site-ready');
+
+      const cursor = document.getElementById('custom-cursor');
+      if (!cursor) return;
+
+      document.body.classList.add('cursor-ready');
+
+      const move = (e) => {
+        cursor.style.setProperty('--cursor-x', e.clientX);
+        cursor.style.setProperty('--cursor-y', e.clientY);
+      };
+
+      window.addEventListener('mousemove', move, { passive: true });
+      window.addEventListener('pointermove', move, { passive: true });
+
+      const isInteractive = (el) => {
+        if (!el) return false;
+        return !!el.closest('a, button, summary, [role="button"], input, textarea, select, label');
+      };
+
+      window.addEventListener('mouseover', (e) => {
+        if (isInteractive(e.target)) cursor.classList.add('is-pointer');
+      }, { passive: true });
+
+      window.addEventListener('mouseout', (e) => {
+        if (isInteractive(e.target)) cursor.classList.remove('is-pointer');
+      }, { passive: true });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
